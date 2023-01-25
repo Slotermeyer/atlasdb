@@ -33,6 +33,7 @@ import com.palantir.atlasdb.keyvalue.impl.RowResults;
 import com.palantir.atlasdb.transaction.api.TransactionLockWatchFailedException;
 import com.palantir.common.streams.KeyedStream;
 import com.palantir.lock.watch.CommitUpdate;
+import com.palantir.logsafe.Unsafe;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -247,6 +248,7 @@ final class TransactionScopedCacheImpl implements TransactionScopedCache {
                 .collectToMap();
     }
 
+    @Unsafe
     @Value.Immutable
     interface CacheLookupResult {
         Map<Cell, CacheValue> cacheHits();
