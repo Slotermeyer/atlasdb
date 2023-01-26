@@ -542,11 +542,18 @@ public final class LockWatchValueIntegrationTest {
     }
 
     @Test
-    public void valueStressTest() {
-        int numTransactions = 1_000;
-        for (int i = 1; i < 1024; i *= 2) {
-            stress(i * numTransactions);
-        }
+    public void valueStress_1_000() {
+        stress(1_000);
+    }
+
+    @Test
+    public void valueStress_10_000() {
+        stress(10_000);
+    }
+
+    @Test
+    public void valueStress_100_000() {
+        stress(100_000);
     }
 
     private void stress(int numTransactions) {
@@ -565,7 +572,7 @@ public final class LockWatchValueIntegrationTest {
                     transaction.get(60, TimeUnit.SECONDS);
                 } catch (ExecutionException e) {
                     if (!(e.getCause() instanceof TransactionFailedRetriableException)) {
-                        fail("Encountered nonretriable exception", e);
+                        fail("Encountered non-retryable exception", e);
                     }
                 } catch (InterruptedException | TimeoutException e) {
                     fail("Transaction took too long", e);
